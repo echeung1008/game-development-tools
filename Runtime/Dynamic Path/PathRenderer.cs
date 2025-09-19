@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static BlueMuffinGames.GameDevelopmentTools.DynamicPath.ConcavityRuns;
-using static ConcavityRuns;
 
 namespace BlueMuffinGames.Tools.DynamicPath
 {
+    using static BlueMuffinGames.Tools.DynamicPath.ConcavityRuns;
+
     [System.Serializable]
     public class PathRenderer : MonoBehaviour
     {
