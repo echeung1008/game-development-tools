@@ -5,7 +5,7 @@ public static class Vector2Extensions
     public static Vector2 AddAngle(this Vector2 vector2, float angleToAdd)
     {
         float magnitude = vector2.magnitude;
-        float currentAngle = Mathf.Atan2(vector3.y, vector2.x) * Mathf.Rad2Deg;
+        float currentAngle = Mathf.Atan2(vector2.y, vector2.x) * Mathf.Rad2Deg;
 
         currentAngle += angleToAdd;
 
