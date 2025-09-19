@@ -14,8 +14,8 @@ These utilities were originally created for our games **Compactory** and **Arcti
 ---
 
 ## 🎮 Games Using These Tools
-- [Compactory](#https://store.steampowered.com/app/3137310/Compactory/)  
-- [Arctic Slopes](#https://blue-muffin-games.itch.io/arctric-slopes)  
+- [Compactory](https://store.steampowered.com/app/3137310/Compactory/)  
+- [Arctic Slopes](https://blue-muffin-games.itch.io/arctric-slopes)  
 
 ---
 
