@@ -1,0 +1,13 @@
+{
+  "name": "com.bluemuffingames.tools",
+  "displayName": "BMG Tools",
+  "version": "0.1.0",
+  "unity": "6000.0",
+  "description": "A collection of scripts to help make games easier.",
+  "author": {
+    "name": "Edmund Cheung",
+    "url": "https://github.com/echeung1008"
+  },
+  "keywords": [ "utilities", "tools" ],
+  "license": "MIT"
+}

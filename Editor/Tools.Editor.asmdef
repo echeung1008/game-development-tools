@@ -1,0 +1,7 @@
+{
+  "name": "Tools.Editor",
+  "rootNamespace": "BlueMuffinGames.Tools",
+  "references": [ "Tools.Runtime" ],
+  "includePlatforms": [ "Editor" ],
+  "autoReferenced": true
+}
