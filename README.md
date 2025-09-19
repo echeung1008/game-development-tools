@@ -29,8 +29,8 @@ These utilities were originally created for my games **Compactory** and **Arctic
 ---
 
 ## 🚀 Requirements
-- Tested on **Unity 6000.0.35f1**  
-- Should work on earlier Unity versions, as the tools do not rely on version-specific features   
+- Tested on **Unity 6000.0.35f1**
+- The oldest compatible version is 2021.1, when the ObjectPool<T> class was introduced
 
 ---
 
