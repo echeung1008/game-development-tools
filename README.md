@@ -1,7 +1,7 @@
 # Blue Muffin Games Tools
 
-Reusable Unity tools and scripts developed by **Blue Muffin Games**.  
-These utilities were originally created for our games **Compactory** and **Arctic Slopes**, and will continue to evolve as we build future projects. They are designed to make gameplay systems, editor workflows, and general development faster and easier.
+Reusable Unity tools and scripts developed by [Edmund Cheung (Blue Muffin)](https://bluemuffindev.wixsite.com/home).  
+These utilities were originally created for my games **Compactory** and **Arctic Slopes**, and will continue to evolve as I build future projects. They are designed to make gameplay systems, editor workflows, and general development faster and easier.
 
 ---
 
