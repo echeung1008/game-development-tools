@@ -20,8 +20,6 @@ namespace BlueMuffinGames.Tools.DynamicPath
                 return;
             }
 
-            if (nodePrefab == null) return;
-
             Node first = nodes.First();
             Node node = GetNewNode(first != null ? first.Position + Vector3.left * 2f : transform.position);
 
@@ -37,8 +35,6 @@ namespace BlueMuffinGames.Tools.DynamicPath
                 AddRootNode();
                 return;
             }
-
-            if (nodePrefab == null) return;
 
             Node last = nodes.Last();
             Node node = GetNewNode(last != null ? last.Position + Vector3.right * 2f : transform.position);
@@ -56,7 +52,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
                 return;
             }
 
-            if (nodePrefab == null || index < 0 || index > nodes.Count - 1) return;
+            if (index < 0 || index > nodes.Count - 1) return;
 
             if (index == 0)
             {
@@ -257,7 +253,10 @@ namespace BlueMuffinGames.Tools.DynamicPath
 
         private Node GetNewNode(Vector3 position)
         {
-            Node newNode = NodePool.GetNode();
+            Node newNode;
+            if (NodePool.Instance != null) newNode = NodePool.GetNode();
+            else newNode = Instantiate(nodePrefab).GetComponent<Node>();
+            
             newNode.transform.position = position;
             newNode.transform.SetParent(transform, true);
             return newNode;

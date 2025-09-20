@@ -148,6 +148,8 @@ public class PathEditor : Editor
 
         GUILayout.EndHorizontal();
 
+        if (path.nodes == null) return;
+
         GUILayout.Space(2f);
 
         _scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
