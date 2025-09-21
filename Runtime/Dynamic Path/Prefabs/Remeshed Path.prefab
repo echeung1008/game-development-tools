@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 634208535024521429}
   - component: {fileID: 1690151020232566177}
   m_Layer: 6
-  m_Name: Remesh
+  m_Name: Remeshed Path
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,12 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 493242875668580010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b84c7d94920eb4db235f9aa87b2be0, type: 3}
+  m_Script: {fileID: 11500000, guid: e0311c88e14824247aa14b5b649a071a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 7880212722124014108, guid: 660acbbd810dfa14a91b7472b8f2d14d, type: 3}
   nodes: []
   targetPath: {fileID: 0}
-  maxVoxelSize: 0.5
+  maxVoxelSize: 0.1
   maxIterations: 1000
-  remeshMode: 1
+  remeshMode: 0

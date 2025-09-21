@@ -96,23 +96,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4441045581069832959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edd75859243a63947bcf3bf31bac9c23, type: 3}
+  m_Script: {fileID: 11500000, guid: 272eec1ac3e993949a832058cf1d3b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 857560749747639135}
   targetPath: {fileID: 0}
-  meshHeight: 30
+  meshHeight: 0
   stitchMeshes: 1
-  renderResult: "---------RENDER RESULTS---------\n11 Runs were detected.\n\tBridge
-    (2) ... Patching...\n\tConcave Down (3) ... Successfully initialized:\n\t\tVertices
-    (8)\n\t\tTriangles (6)\n\t\tIncluded 1 preceeding straggler\n\tBridge (4) ...
-    Successfully initialized:\n\t\tVertices (8)\n\t\tTriangles (6)\n\tConcave Down
-    (8) ... Successfully initialized:\n\t\tVertices (11)\n\t\tTriangles (9)\n\tBridge
-    (5) ... Successfully initialized:\n\t\tVertices (10)\n\t\tTriangles (8)\n\tConcave
-    Up (7) ... Successfully initialized:\n\t\tVertices (10)\n\t\tTriangles (9)\n\tBridge
-    (5) ... Successfully initialized:\n\t\tVertices (10)\n\t\tTriangles (8)\n\tConcave
-    Down (13) ... Successfully initialized:\n\t\tVertices (17)\n\t\tTriangles (15)\n\t\tIncluded
-    1 proceeding straggler\n\tConcave Up (8) ... Successfully initialized:\n\t\tVertices
-    (11)\n\t\tTriangles (10)\n\tBridge (3) ... Successfully initialized:\n\t\tVertices
-    (6)\n\t\tTriangles (4)\nSuccessfully created a mesh.\n\tVertices (91)\n\tTriangles
-    (91)"
+  renderResult: 

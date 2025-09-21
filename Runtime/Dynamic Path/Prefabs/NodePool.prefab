@@ -41,9 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8245576910705205904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62c74614eee589d4bb33dfce4dbb0c18, type: 3}
+  m_Script: {fileID: 11500000, guid: a86297b081c82d34aaea762614f0ca90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 7880212722124014108, guid: 3d425fa15eb7dc94fb3ed12002000150, type: 3}
-  poolSize: 1000
-  maxSize: 1500
+  objectPrefab: {fileID: 7880212722124014108, guid: 660acbbd810dfa14a91b7472b8f2d14d, type: 3}
+  poolSize: 100
+  maxSize: 500
