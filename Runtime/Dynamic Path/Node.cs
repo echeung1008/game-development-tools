@@ -131,8 +131,14 @@ namespace BlueMuffinGames.Tools.DynamicPath
 
         private void Awake() => SyncFromTransform(force: true);
         private void OnEnable() => SyncFromTransform(force: true);
-        private void Update() => SyncFromTransform();
         private void OnValidate() => SyncFromTransform(force: true);
+        private void Update()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying) { SyncFromTransform(); return; }
+#endif
+            SyncFromTransform();
+        }
 
         private void SyncFromTransform(bool force = false)
         {

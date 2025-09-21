@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEditor.Experimental.SceneManagement;
+#endif
+
 namespace BlueMuffinGames.Tools.DynamicPath
 {
     [System.Serializable]
@@ -10,7 +16,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
         [SerializeField]
         private GameObject nodePrefab;
 
-        public List<Node> nodes;
+        public List<Node> nodes = new List<Node>();
 
         public void AddNodeToFront()
         {
@@ -81,15 +87,27 @@ namespace BlueMuffinGames.Tools.DynamicPath
 
         public void DeleteNode(int index)
         {
-            if (index < 0 || index > nodes.Count - 1) return;
+            if (index < 0 || index >= nodes.Count) return;
 
-            Node removed = nodes[index];
+#if UNITY_EDITOR
+            Undo.RecordObject(this, "Delete Path Node");
+#endif
 
+            var removed = nodes[index];
             nodes.RemoveAt(index);
-            if (removed.gameObject != null) DestroyImmediate(removed.gameObject);
+
+#if UNITY_EDITOR
+            if (removed) Undo.DestroyObjectImmediate(removed.gameObject);
+#else
+    if (removed) Destroy(removed.gameObject);
+#endif
 
             RebuildNeighborReferences(index - 1, index);
             UpdateNodeNames();
+
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+#endif
         }
 
         public void ClearPath(bool clearImmediate)
@@ -253,13 +271,43 @@ namespace BlueMuffinGames.Tools.DynamicPath
 
         private Node GetNewNode(Vector3 position)
         {
-            Node newNode;
-            if (NodePool.Instance != null) newNode = NodePool.GetNode();
-            else newNode = Instantiate(nodePrefab).GetComponent<Node>();
-            
-            newNode.transform.position = position;
-            try { newNode.transform.SetParent(transform, true); } catch { }
-            return newNode;
+            GameObject go;
+            // Don’t use pooling in edit-time
+            if (Application.isPlaying && NodePool.Instance != null)
+            {
+                var pooled = NodePool.GetNode();
+                pooled.transform.position = position;
+                pooled.transform.SetParent(transform, true);
+                return pooled;
+            }
+
+            // Editor / Prefab Mode safe instantiate
+#if UNITY_EDITOR
+            var stage = PrefabStageUtility.GetCurrentPrefabStage();
+            if (stage != null)
+            {
+                // Instantiate into the prefab stage scene so it’s saved to the asset
+                go = (GameObject)PrefabUtility.InstantiatePrefab(nodePrefab, stage.scene);
+                Undo.RegisterCreatedObjectUndo(go, "Add Path Node");
+                // Parent under the Path instance that lives inside the stage
+                go.transform.SetParent(transform, true);
+            }
+            else
+            {
+                go = (GameObject)PrefabUtility.InstantiatePrefab(nodePrefab);
+                Undo.RegisterCreatedObjectUndo(go, "Add Path Node");
+                go.transform.SetParent(transform, true);
+            }
+#else
+            go = Instantiate(nodePrefab);
+            go.transform.SetParent(transform, true);
+#endif
+
+            go.transform.position = position;
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(go);
+#endif
+            return go.GetComponent<Node>();
         }
 
         private void RebuildNeighborReferences(int start, int end)
