@@ -60,7 +60,7 @@ public class PathEditor : Editor
         if (moveDownIndex >= 0) path.MoveNodeDown(moveDownIndex);
         if (deleteIndex >= 0) path.DeleteNode(deleteIndex);
 
-        _nodeCount = path.nodes.Count;
+        _nodeCount = path.nodes != null ? path.nodes.Count : 0;
     }
 
     void OnSceneGUI()
