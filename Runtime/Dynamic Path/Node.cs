@@ -32,6 +32,18 @@ namespace BlueMuffinGames.Tools.DynamicPath
             }
         }
 
+        public float Z
+        {
+            get => transform.position.z;
+            private set
+            {
+                var p = transform.position;
+                p.z = value;
+                transform.position = p;
+                RecalculateTangent();
+            }
+        }
+
         public float M { get; private set; }
 
         public float W { get; set; }
