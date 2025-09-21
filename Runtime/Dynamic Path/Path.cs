@@ -177,7 +177,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
                 last.transform.SetParent(last.Next.transform.parent, true);
             }
 
-            NodePool.ReleaseNodes(nodes.ToArray());
+            if (NodePool.Instance != null) NodePool.ReleaseNodes(nodes.ToArray());
             nodes.Clear();
         }
 
@@ -258,7 +258,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
             else newNode = Instantiate(nodePrefab).GetComponent<Node>();
             
             newNode.transform.position = position;
-            newNode.transform.SetParent(transform, true);
+            try { newNode.transform.SetParent(transform, true); } catch { }
             return newNode;
         }
 

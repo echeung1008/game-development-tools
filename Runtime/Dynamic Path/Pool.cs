@@ -40,7 +40,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
             lastInitialize = (objectPrefab, poolSize, maxSize);
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             pool?.Clear();
         }

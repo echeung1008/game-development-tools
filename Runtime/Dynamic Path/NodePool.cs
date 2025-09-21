@@ -16,5 +16,11 @@ namespace BlueMuffinGames.Tools.DynamicPath
             base.Initialize();
             Instance = this;
         }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            Instance = null;
+        }
     }
 }
