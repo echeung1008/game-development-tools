@@ -8,6 +8,8 @@ namespace BlueMuffinGames.Tools.DynamicPath
         [SerializeField] private Node _prev;
         [SerializeField] private Node _next;
 
+        [SerializeField] public bool clampBetweenPrevAndNext = true;
+
         public float X
         {
             get => transform.position.x;
@@ -144,8 +146,11 @@ namespace BlueMuffinGames.Tools.DynamicPath
         {
             if (force || transform.position != _lastPos)
             {
-                if (_prev != null) transform.position = new Vector3(Mathf.Max(_prev.X, transform.position.x), transform.position.y, transform.position.z);
-                if (_next != null) transform.position = new Vector3(Mathf.Min(_next.X, transform.position.x), transform.position.y, transform.position.z);
+                if (clampBetweenPrevAndNext)
+                {
+                    if (_prev != null) transform.position = new Vector3(Mathf.Max(_prev.X, transform.position.x), transform.position.y, transform.position.z);
+                    if (_next != null) transform.position = new Vector3(Mathf.Min(_next.X, transform.position.x), transform.position.y, transform.position.z);
+                }
                 _lastPos = transform.position;
                 RecalculateTangent();
                 Previous?.RecalculateTangent();
@@ -192,7 +197,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
         private void DrawExtension(Vector3 dir, float halfLength, Color color, bool positiveOnly = false)
         {
             Debug.DrawLine(Position, Position + halfLength * dir, color);
-            //if(!positiveOnly) Debug.DrawLine(Position, Position - halfLength * dir, color);
+            if(!positiveOnly) Debug.DrawLine(Position, Position - halfLength * dir, color);
         }
 
         public void ClearLinks() { _prev = null; _next = null; }

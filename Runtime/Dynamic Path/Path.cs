@@ -16,6 +16,9 @@ namespace BlueMuffinGames.Tools.DynamicPath
         [SerializeField]
         private GameObject nodePrefab;
 
+        [SerializeField]
+        private bool _clampNodesBetweenPrevAndNext = true;
+
         public List<Node> nodes = new List<Node>();
 
         public void AddNodeToFront()
@@ -307,7 +310,9 @@ namespace BlueMuffinGames.Tools.DynamicPath
 #if UNITY_EDITOR
             EditorUtility.SetDirty(go);
 #endif
-            return go.GetComponent<Node>();
+            Node result = go.GetComponent<Node>();
+            result.clampBetweenPrevAndNext = _clampNodesBetweenPrevAndNext;
+            return result;
         }
 
         private void RebuildNeighborReferences(int start, int end)
