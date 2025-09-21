@@ -5,7 +5,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
 {
     public class NodePool : Pool<Node>
     {
-        public static NodePool Instance { get; private set; }
+        public static NodePool Instance { get; private set; } = null;
 
         public static Node GetNode() => Instance?.GetObject();
         public static void ReleaseNode(Node node) => ReleaseObject(node);
