@@ -17,7 +17,6 @@ namespace BlueMuffinGames.Tools.DynamicPath
         public static ObjectPool<GameObject> pool { get; private set; }
 
         private void Awake() => Initialize();
-        private void OnValidate() => Initialize();
 
         private (GameObject, int, int) lastInitialize;
 
