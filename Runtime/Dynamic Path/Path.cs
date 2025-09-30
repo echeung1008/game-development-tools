@@ -266,7 +266,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
             return mirror;
         }
 
-        public bool IsPointInsidePolygon(Vector3 point) => nodes.Select((n) => n.Position).ToList().IsPointInsidePolygon(point);
+        public bool IsPointInsidePolygon(Vector2 point) => nodes.Select((n) => n.Position).ToList().IsPointInsidePolygon(point);
 
         private void AddRootNode()
         {
