@@ -5,7 +5,6 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.Experimental.SceneManagement;
 #endif
 
 namespace BlueMuffinGames.Tools.DynamicPath
@@ -266,6 +265,8 @@ namespace BlueMuffinGames.Tools.DynamicPath
 
             return mirror;
         }
+
+        public bool IsPointInsidePolygon(Vector3 point) => nodes.Select((n) => n.Position).ToList().IsPointInsidePolygon(point);
 
         private void AddRootNode()
         {
