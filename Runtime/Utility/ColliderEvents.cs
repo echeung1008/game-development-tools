@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BlueMuffinGames.Tools
 {
+    [RequireComponent(typeof(Collider))]
     public class ColliderEvents : MonoBehaviour
     {
         public event Action<Collision> CollisionEnter = delegate {};
@@ -18,5 +19,8 @@ namespace BlueMuffinGames.Tools
         public void OnTriggerEnter(Collider other) => TriggerEnter?.Invoke(other);
         public void OnTriggerStay(Collider other) => TriggerStay?.Invoke(other);
         public void OnTriggerExit(Collider other) => TriggerExit?.Invoke(other);
+
+        public Collider Collider { get; private set; }
+        private void Awake() { Collider = GetComponent<Collider>(); }
     }
 }
