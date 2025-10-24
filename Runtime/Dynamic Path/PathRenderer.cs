@@ -17,7 +17,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
         public Path targetPath;
 
         [SerializeField]
-        public float meshHeight;
+        public float meshHeight = 10f;
 
         [SerializeField]
         public bool stitchMeshes = true;

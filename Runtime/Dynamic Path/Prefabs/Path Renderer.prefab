@@ -101,6 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 857560749747639135}
   targetPath: {fileID: 0}
-  meshHeight: 0
+  meshHeight: 10
   stitchMeshes: 1
   renderResult: 

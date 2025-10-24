@@ -18,7 +18,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
         private int maxIterations = 1000;
 
         [SerializeField]
-        public RemeshMode remeshMode = RemeshMode.Simple;
+        public RemeshMode remeshMode = RemeshMode.Complex;
 
         private PolygonCollider2D polygonCollider;
 
@@ -190,7 +190,7 @@ namespace BlueMuffinGames.Tools.DynamicPath
 
         private void UpdatePolygonCollider(bool disableCollider)
         {
-            if (polygonCollider == null) polygonCollider = transform.parent.GetComponent<PolygonCollider2D>();
+            if (polygonCollider == null && transform.parent != null) polygonCollider = transform.parent.GetComponent<PolygonCollider2D>();
 
             if (polygonCollider != null)
             {

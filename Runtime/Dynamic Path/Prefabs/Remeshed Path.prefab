@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 7880212722124014108, guid: 660acbbd810dfa14a91b7472b8f2d14d, type: 3}
+  _clampNodesBetweenPrevAndNext: 1
   nodes: []
   targetPath: {fileID: 0}
   maxVoxelSize: 0.1
   maxIterations: 1000
-  remeshMode: 0
+  remeshMode: 1
