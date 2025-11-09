@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BlueMuffinGames.Tools
+namespace BlueMuffinGames.Tools.StateMachine
 {
     public class StateMachine : MonoBehaviour
     {
@@ -30,12 +30,14 @@ namespace BlueMuffinGames.Tools
         public virtual void ChangeState(State state)
         {
             if (state == null) return;
-            if (!_allowExternalStates && !_states.Values.Contains(state)) { LogError($"Attempted to transition to {state.name} when external states aren't allowed in StateMachine {name}."); return; } 
+            if (!_allowExternalStates && !_states.Values.Contains(state)) { LogError($"Attempted to transition to {state.name} when external states aren't allowed in StateMachine {name}."); return; }
+            if (state == CurrentState) return;
 
             if (CurrentState != null)
             {
                 CurrentState.Exiting();
                 CurrentState.Exit();
+                CurrentState.OnShouldTransition -= ChangeState;
                 OnStateExited?.Invoke(CurrentState);
             }
 
@@ -43,6 +45,7 @@ namespace BlueMuffinGames.Tools
 
             CurrentState.Entering();
             CurrentState.Enter();
+            CurrentState.OnShouldTransition += ChangeState;
             OnStateEntered?.Invoke(CurrentState);
         }
 
