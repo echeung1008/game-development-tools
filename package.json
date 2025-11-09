@@ -3,7 +3,7 @@
   "displayName": "BMG Tools",
   "version": "0.1.6",
   "unity": "6000.0",
-  "description": "A collection of scripts to help making games easier.",
+  "description": "A collection of tools to make developing games easier.",
   "author": {
     "name": "Edmund Cheung",
     "url": "https://github.com/echeung1008"
