@@ -34,7 +34,7 @@ namespace BlueMuffinGames.Tools.StateMachine
         {
             foreach (StateTransition transition in _transitions)
             {
-                transition.OnShouldTransition += OnShouldTransition;
+                transition.OnShouldTransition += HandleShouldTransition;
             }
         }
 
@@ -50,7 +50,7 @@ namespace BlueMuffinGames.Tools.StateMachine
         {
             foreach (StateTransition transition in _transitions)
             {
-                transition.OnShouldTransition -= OnShouldTransition;
+                transition.OnShouldTransition -= HandleShouldTransition;
             }
         }
 
@@ -58,5 +58,10 @@ namespace BlueMuffinGames.Tools.StateMachine
         /// Called when this state is exited.
         /// </summary>
         public virtual void Exit() { OnExited?.Invoke(); }
+
+        private void HandleShouldTransition(State targetState)
+        {
+            OnShouldTransition?.Invoke(targetState);
+        }
     }
 }
