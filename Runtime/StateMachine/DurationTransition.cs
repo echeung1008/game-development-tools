@@ -6,7 +6,7 @@ namespace BlueMuffinGames.Tools
 {
     public class DurationTransition : StateTransition
     {
-        [SerializeField] private float _duration = 1f;
+        public float duration = 1f;
 
         private Coroutine _currentTimer;
 
@@ -32,7 +32,7 @@ namespace BlueMuffinGames.Tools
 
         private IEnumerator Timer()
         {
-            yield return new WaitForSeconds(_duration);
+            yield return new WaitForSeconds(duration);
             Transition();
         }
     }
