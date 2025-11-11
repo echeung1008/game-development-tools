@@ -12,17 +12,21 @@ namespace BlueMuffinGames.Tools.StateMachine
         public event Action OnEntered = delegate { };
         public event Action OnExited = delegate { };
 
+        public StateMachine ParentStateMachine { get; private set; }
+
         /// <summary>
         /// Called when this state is registered to the StateMachine.
         /// </summary>
         public virtual void Initialize(StateMachine stateMachine)
         {
+            ParentStateMachine = stateMachine;
+
             foreach (Transform child in transform)
             {
                 if (child.TryGetComponent(out StateTransition transition))
                 {
                     _transitions.Add(transition);
-                    transition.Initialize(stateMachine, this);
+                    transition.Initialize(this);
                 }
             }
         }

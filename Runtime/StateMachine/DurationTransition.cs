@@ -9,9 +9,9 @@ namespace BlueMuffinGames.Tools.StateMachine
 
         private Coroutine _currentTimer;
 
-        public override void Initialize(StateMachine stateMachine, State state)
+        public override void Initialize(State state)
         {
-            base.Initialize(stateMachine, state);
+            base.Initialize(state);
 
             state.OnEntered += StartTimer;
             state.OnExited += StopTimer;
