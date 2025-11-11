@@ -61,7 +61,7 @@ namespace BlueMuffinGames.Tools.StateMachine
                     if (_states.ContainsKey(state.name)) { LogWarning($"State name {state.name} is conflicting with another state."); continue; }
 
                     _states[state.name] = state;
-                    state.Initialize();
+                    state.Initialize(this);
                     numStates++;
                 }
             }

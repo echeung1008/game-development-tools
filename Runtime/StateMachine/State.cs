@@ -15,14 +15,14 @@ namespace BlueMuffinGames.Tools.StateMachine
         /// <summary>
         /// Called when this state is registered to the StateMachine.
         /// </summary>
-        public virtual void Initialize()
+        public virtual void Initialize(StateMachine stateMachine)
         {
             foreach (Transform child in transform)
             {
                 if (child.TryGetComponent(out StateTransition transition))
                 {
                     _transitions.Add(transition);
-                    transition.Initialize(this);
+                    transition.Initialize(stateMachine, this);
                 }
             }
         }

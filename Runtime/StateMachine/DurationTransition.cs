@@ -1,8 +1,7 @@
-using BlueMuffinGames.Tools.StateMachine;
 using System.Collections;
 using UnityEngine;
 
-namespace BlueMuffinGames.Tools
+namespace BlueMuffinGames.Tools.StateMachine
 {
     public class DurationTransition : StateTransition
     {
@@ -10,9 +9,9 @@ namespace BlueMuffinGames.Tools
 
         private Coroutine _currentTimer;
 
-        public override void Initialize(State state)
+        public override void Initialize(StateMachine stateMachine, State state)
         {
-            base.Initialize(state);
+            base.Initialize(stateMachine, state);
 
             state.OnEntered += StartTimer;
             state.OnExited += StopTimer;

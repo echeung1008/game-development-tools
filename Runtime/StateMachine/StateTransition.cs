@@ -12,7 +12,7 @@ namespace BlueMuffinGames.Tools.StateMachine
         /// <summary>
         /// Called when this transition is registered to a State.
         /// </summary>
-        public virtual void Initialize(State state) { }
+        public virtual void Initialize(StateMachine stateMachine, State state) { }
 
         /// <summary>
         /// Tells the StateMachine to transition to the target state.
