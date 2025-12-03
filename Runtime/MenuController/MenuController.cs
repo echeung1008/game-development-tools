@@ -8,6 +8,7 @@ namespace BlueMuffinGames.Tools.MenuController
     public class MenuController : MonoBehaviour
     {
         [SerializeField] private bool _showFirstPageOnStart;
+        [SerializeField] private bool _allowExternalPages;
 
         private List<MenuPage> _pages = new();
         private Stack<MenuPage> _navigationStack = new();
@@ -22,6 +23,8 @@ namespace BlueMuffinGames.Tools.MenuController
         /// <param name="onShowComplete">Invoked when the new page is shown.</param>
         public virtual void PushPage(MenuPage page, Action onHideComplete = null, Action onShowComplete = null, params object[] args)
         {
+            if (!_allowExternalPages && !_pages.Contains(page)) return;
+
             if (_navigationStack.TryPeek(out MenuPage currentPage)) currentPage.Hide(() =>
             {
                 Push(); // push after the current page finishes hiding
@@ -34,6 +37,13 @@ namespace BlueMuffinGames.Tools.MenuController
                 onHideComplete?.Invoke();
                 page.Show(onShowComplete, args);
             }
+        }
+
+        public virtual void PushPage(string pageName, Action onHideComplete = null, Action onShowComplete = null, params object[] args)
+        {
+            var filtered = _pages.Where(p => p.name == pageName).ToList();
+            if (filtered.Count > 0) PushPage(filtered.First(), onHideComplete, onShowComplete, args);
+            else Debug.LogWarning($"[MenuController] Page {pageName} not found in pages.");
         }
 
         /// <summary>
