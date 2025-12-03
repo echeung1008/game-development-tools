@@ -38,13 +38,14 @@ namespace BlueMuffinGames.Tools.MenuController
                 page.Show(onShowComplete, args);
             }
         }
-
-        public virtual void PushPage(string pageName, Action onHideComplete = null, Action onShowComplete = null, params object[] args)
+        public void PushPage(string pageName, Action onHideComplete = null, Action onShowComplete = null, params object[] args)
         {
             var filtered = _pages.Where(p => p.name == pageName).ToList();
             if (filtered.Count > 0) PushPage(filtered.First(), onHideComplete, onShowComplete, args);
             else Debug.LogWarning($"[MenuController] Page {pageName} not found in pages.");
         }
+        public void PushPage(string pageName) => PushPage(pageName, null, null);
+        public void PushPage(MenuPage page) => PushPage(page, null, null);
 
         /// <summary>
         /// Pop (hide) the current page. Starts showing the previous page after hiding, if any.
@@ -66,6 +67,7 @@ namespace BlueMuffinGames.Tools.MenuController
             
             return result;
         }
+        public void PopPage() => PopPage(null, null);
 
         private void Awake()
         {
