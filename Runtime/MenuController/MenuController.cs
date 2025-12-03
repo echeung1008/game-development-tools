@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BlueMuffinGames.Tools.MenuController
 {
     public class MenuController : MonoBehaviour
     {
-        [SerializeField] private MenuPage _firstPage;
-        [SerializeField] private bool _enableOnStart;
+        [SerializeField] private bool _showFirstPageOnStart;
 
+        private List<MenuPage> _pages = new();
         private Stack<MenuPage> _navigationStack = new();
 
         public event Action onStackEmptied = delegate { };
@@ -54,6 +55,20 @@ namespace BlueMuffinGames.Tools.MenuController
             }, args);
             
             return result;
+        }
+
+        private void Awake()
+        {
+            foreach(Transform child in transform)
+            {
+                if (child.TryGetComponent(out MenuPage menuPage))
+                {
+                    menuPage.Initialize();
+                    _pages.Add(menuPage);
+                }
+            }
+
+            if (_showFirstPageOnStart && _pages.Count > 0) _pages.First().Show();
         }
     }
 }
