@@ -75,9 +75,16 @@ namespace BlueMuffinGames.Tools.MenuController
             {
                 if (child.TryGetComponent(out MenuPage menuPage))
                 {
-                    menuPage.Initialize();
                     _pages.Add(menuPage);
                 }
+            }
+        }
+
+        private void Start()
+        {
+            foreach(MenuPage page in _pages)
+            {
+                page.Initialize();
             }
 
             if (_showFirstPageOnStart && _pages.Count > 0)
