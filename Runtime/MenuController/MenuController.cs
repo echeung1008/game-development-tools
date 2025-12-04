@@ -80,7 +80,10 @@ namespace BlueMuffinGames.Tools.MenuController
                 }
             }
 
-            if (_showFirstPageOnStart && _pages.Count > 0) _pages.First().Show();
+            if (_showFirstPageOnStart && _pages.Count > 0)
+            {
+                PushPage(_pages.First());
+            }
         }
     }
 }
