@@ -24,6 +24,7 @@ namespace BlueMuffinGames.Extensions
             {
                 currentTime += Time.deltaTime;
                 if (progressTracker != null) progressTracker.Progress = currentTime / duration;
+                yield return null;
             }
 
             if (progressTracker != null) progressTracker.Progress = 1f;
