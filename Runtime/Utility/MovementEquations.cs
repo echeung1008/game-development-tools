@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace BlueMuffinGames.GameDevelopmentTools.Utility
+namespace BlueMuffinGames.Utility
 {
     public static class MovementEquations
     {

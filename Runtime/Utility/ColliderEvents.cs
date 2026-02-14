@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace BlueMuffinGames.Tools
+namespace BlueMuffinGames.Utility
 {
     [RequireComponent(typeof(Collider))]
     public class ColliderEvents : MonoBehaviour
