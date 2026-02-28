@@ -1,0 +1,22 @@
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using UnityEngine;
+
+namespace BlueMuffinGames.Tools.SettingsSystem
+{
+    public abstract class BaseSetting : MonoBehaviour
+    {
+        [SerializeField] private string _id;
+        
+        public string ID => _id;
+
+        public virtual void ResetSetting()
+        {
+            if (BaseSettingsManager.Instance != null) BaseSettingsManager.Instance.ResetSetting(ID);
+        }
+
+        protected virtual void SetSetting(object value)
+        {
+            if (BaseSettingsManager.Instance != null) BaseSettingsManager.Instance.RecordChange(ID, value);
+        }
+    }
+}
