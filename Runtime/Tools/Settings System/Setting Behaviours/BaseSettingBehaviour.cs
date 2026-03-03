@@ -6,6 +6,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
     {
         [SerializeField] private string _targetId;
         public string TargetId => _targetId;
+        public abstract void OnValueChanged(object value);
         public abstract void OnValueApplied(object value);
     }
 }

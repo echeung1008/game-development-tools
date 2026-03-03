@@ -9,12 +9,14 @@ namespace BlueMuffinGames.Tools.SettingsSystem
 
         [SerializeField] private SettingsRegistry _registry;
         [SerializeField] private List<BaseSettingBehaviour> _behaviours;
+        [SerializeField] private List<BaseSettingOptionGetter> _optionGetters;
 
         private Dictionary<string, SettingGroup> _registeredSettingGroups = new();
         private Dictionary<string, SettingDefinition> _registeredSettingDefinitions = new();
 
         private Dictionary<string, object> _registeredValues = new();
         private Dictionary<string, BaseSettingBehaviour> _registeredBehaviours = new();
+        private Dictionary<string, BaseSettingOptionGetter> _registeredOptionGetters = new();
         private Dictionary<string, object> _changeRegistry = new();
 
         public virtual bool TryGetValue<T>(string id, out T value, bool onlyApplied = true)
@@ -48,6 +50,11 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         public virtual void RecordChange(string id, object value)
         {
             _changeRegistry[id] = value;
+
+            if (_registeredBehaviours.TryGetValue(id, out var behaviour))
+            {
+                behaviour.OnValueChanged(value);
+            }
         }
 
         public virtual void PushAllChanges()
@@ -113,12 +120,26 @@ namespace BlueMuffinGames.Tools.SettingsSystem
             if (applyChanges) PushAllChanges();
         }
 
+        public virtual bool TryGetSettingOptions(string id, out List<object> options, bool useCache = true)
+        {
+            options = null;
+            if (!_registeredOptionGetters.TryGetValue(id, out var getter))
+            {
+                Debug.LogError($"(BaseSettingsManager) Option Getter Registry does not contain a getter for id {id}");
+                return false;
+            }
+
+            options = getter.GetOptions(useCache);
+            return true;
+        }
+
         protected virtual void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
                 RegisterSettingBehaviours();
+                RegisterOptionGetters();
                 RegisterSettings();
             }
             else Destroy(gameObject);
@@ -189,6 +210,20 @@ namespace BlueMuffinGames.Tools.SettingsSystem
                 }
 
                 _registeredBehaviours[behaviour.TargetId] = behaviour;
+            }
+        }
+
+        private void RegisterOptionGetters()
+        {
+            foreach (var optionGetter in _optionGetters)
+            {
+                if (_registeredOptionGetters.ContainsKey(optionGetter.TargetId))
+                {
+                    Debug.LogWarning($"(BaseSettingsManager) A BaseSettingOptionGetter with TargetId {optionGetter.TargetId} has already been registered. Skipping...");
+                    continue;
+                }
+
+                _registeredOptionGetters[optionGetter.TargetId] = optionGetter;
             }
         }
 
