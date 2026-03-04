@@ -1,11 +1,11 @@
+using System;
 using UnityEngine;
 
 namespace BlueMuffinGames.Tools.SettingsSystem
 {
-    public abstract class BaseSettingBehaviour : ScriptableObject
+    [Serializable]
+    public abstract class BaseSettingBehaviour
     {
-        [SerializeField] private string _targetId;
-        public string TargetId => _targetId;
         public abstract void OnValueChanged(object value);
         public abstract void OnValueApplied(object value);
     }

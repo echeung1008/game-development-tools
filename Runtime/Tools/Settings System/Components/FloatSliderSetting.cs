@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace BlueMuffinGames.Tools.SettingsSystem
 {
-    public sealed class FloatSliderSetting : TypedSetting<float>
+    public class FloatSliderSetting : TypedSetting<float>
     {
         [SerializeField] private Slider _slider;
         [SerializeField] private Vector2 _range;
@@ -14,7 +14,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
 
             if (_slider == null)
             {
-                Debug.LogError($"(FloatSliderSetting) No Slider is assigned on {name}.");
+                Debug.LogError($"(FloatSliderSetting) No Slider component is assigned on {name} with id {ID}.");
                 return;
             }
 

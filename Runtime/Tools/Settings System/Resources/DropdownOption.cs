@@ -5,13 +5,15 @@ namespace BlueMuffinGames.Tools.SettingsSystem
 {
 	public struct DropdownOption
 	{
-		public readonly string name;
+		public readonly string id;
 		public readonly object value;
 
-		public DropdownOption(string name, object value)
+		public DropdownOption(string id, object value)
 		{
-			this.name = name;
+			this.id = id;
 			this.value = value;
 		}
+
+		public override string ToString() => $"DropdownOption (ID: {id} | Value: {value})";
 	}
 }

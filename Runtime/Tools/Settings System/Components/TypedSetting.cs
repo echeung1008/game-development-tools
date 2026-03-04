@@ -4,14 +4,11 @@ using UnityEngine;
 namespace BlueMuffinGames.Tools.SettingsSystem
 {
     public abstract class TypedSetting<T> : BaseSetting
-        where T : struct
     {
-        [SerializeField] private T defaultValue;
-        
-        public T DefaultValue => defaultValue;
-
-        public virtual void Initialize()
+        public override void Initialize()
         {
+            base.Initialize();
+
             if (BaseSettingsManager.Instance == null)
             {
                 Debug.LogError($"(TypedSetting) Tried to initialize TypedSetting before BaseSettingsManager was initialized.");

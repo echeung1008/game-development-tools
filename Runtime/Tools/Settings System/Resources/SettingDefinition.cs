@@ -10,8 +10,13 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         [SerializeField] private Type _type;
         [SerializeField] private string _defaultValue;
 
+        [SerializeReference, SerializeReferenceTypePicker] private BaseSettingBehaviour _behaviour;
+        [SerializeReference, SerializeReferenceTypePicker] private BaseOptionProvider _optionProvider;
+
         public string ID => _id;
         public Type SettingType => _type;
+        public BaseSettingBehaviour Behaviour => _behaviour;
+        public BaseOptionProvider OptionProvider => _optionProvider;
 
         public bool TryGetDefaultValue(out object defaultValue)
         {

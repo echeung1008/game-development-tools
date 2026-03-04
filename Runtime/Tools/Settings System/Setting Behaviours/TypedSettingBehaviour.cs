@@ -9,7 +9,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         {
             if (value is not T casted)
             {
-                Debug.LogError($"(TypedSettingBehaviour) Failed to cast value {value} to type {typeof(T)} for setting ID {TargetId}");
+                Debug.LogError($"(TypedSettingBehaviour) Failed to cast value {value} to type {typeof(T)} in SettingBehaviour {GetType()}");
                 return;
             }
 
@@ -20,7 +20,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         {
             if (value is not T casted)
             {
-                Debug.LogError($"(TypedSettingBehaviour) Failed to cast value {value} to type {typeof(T)} for setting ID {TargetId}");
+                Debug.LogError($"(TypedSettingBehaviour) Failed to cast value {value} to type {typeof(T)} in SettingBehaviour {GetType()}");
                 return;
             }
 

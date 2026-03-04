@@ -14,7 +14,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
 
             if (_toggle == null)
             {
-                Debug.LogError($"(ToggleSetting) No Toggle is assigned on {name}.");
+                Debug.LogError($"(ToggleSetting) No Toggle component is assigned on {name} with id {ID}.");
                 return;
             }
 

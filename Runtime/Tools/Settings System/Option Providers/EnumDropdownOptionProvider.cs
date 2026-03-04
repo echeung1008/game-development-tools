@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace BlueMuffinGames.Tools.SettingsSystem
 {
-    public abstract class EnumDropdownOptionGetter<T> : TypedSettingOptionGetter<DropdownOption>
+    public abstract class EnumDropdownOptionProvider<T> : DropdownOptionProvider
         where T : Enum
     {
-        protected override List<DropdownOption> GetTypedOptions()
+        public override List<DropdownOption> GetOptions()
         {
             List<DropdownOption> options = new();
             foreach (var e in Enum.GetValues(typeof(T)))

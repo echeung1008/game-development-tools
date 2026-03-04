@@ -8,6 +8,8 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         
         public string ID => _id;
 
+        public virtual void Initialize() { }
+
         public virtual void ResetSetting()
         {
             if (BaseSettingsManager.Instance != null) BaseSettingsManager.Instance.ResetSetting(ID);

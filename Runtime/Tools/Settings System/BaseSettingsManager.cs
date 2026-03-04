@@ -8,15 +8,13 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         public static BaseSettingsManager Instance { get; private set; }
 
         [SerializeField] private SettingsRegistry _registry;
-        [SerializeField] private List<BaseSettingBehaviour> _behaviours;
-        [SerializeField] private List<BaseSettingOptionGetter> _optionGetters;
 
         private Dictionary<string, SettingGroup> _registeredSettingGroups = new();
         private Dictionary<string, SettingDefinition> _registeredSettingDefinitions = new();
 
         private Dictionary<string, object> _registeredValues = new();
         private Dictionary<string, BaseSettingBehaviour> _registeredBehaviours = new();
-        private Dictionary<string, BaseSettingOptionGetter> _registeredOptionGetters = new();
+        private Dictionary<string, BaseOptionProvider> _registeredOptionProviders = new();
         private Dictionary<string, object> _changeRegistry = new();
 
         public virtual bool TryGetValue<T>(string id, out T value, bool onlyApplied = true)
@@ -57,6 +55,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
             }
         }
 
+        [ContextMenu("Apply Changes")]
         public virtual void PushAllChanges()
         {
             foreach (var pair in _changeRegistry)
@@ -120,16 +119,25 @@ namespace BlueMuffinGames.Tools.SettingsSystem
             if (applyChanges) PushAllChanges();
         }
 
-        public virtual bool TryGetSettingOptions(string id, out List<object> options, bool useCache = true)
+        public virtual bool TryGetBehaviour(string id, out BaseSettingBehaviour behaviour)
         {
-            options = null;
-            if (!_registeredOptionGetters.TryGetValue(id, out var getter))
+            behaviour = null;
+            if (!_registeredBehaviours.TryGetValue(id, out behaviour))
             {
-                Debug.LogError($"(BaseSettingsManager) Option Getter Registry does not contain a getter for id {id}");
+                Debug.LogError($"(BaseSettingsManager) Behaviour Registry does not contain a behaviour for id {id}");
                 return false;
             }
+            return true;
+        }
 
-            options = getter.GetOptions(useCache);
+        public virtual bool TryGetOptionProvider(string id, out BaseOptionProvider provider)
+        {
+            provider = null;
+            if (!_registeredOptionProviders.TryGetValue(id, out provider))
+            {
+                Debug.LogError($"(BaseSettingsManager) Option Provider Registry does not contain a provider for id {id}");
+                return false;
+            }
             return true;
         }
 
@@ -138,8 +146,6 @@ namespace BlueMuffinGames.Tools.SettingsSystem
             if (Instance == null)
             {
                 Instance = this;
-                RegisterSettingBehaviours();
-                RegisterOptionGetters();
                 RegisterSettings();
             }
             else Destroy(gameObject);
@@ -199,34 +205,6 @@ namespace BlueMuffinGames.Tools.SettingsSystem
             }
         }
 
-        private void RegisterSettingBehaviours()
-        {
-            foreach (var behaviour in _behaviours)
-            {
-                if (_registeredBehaviours.ContainsKey(behaviour.TargetId))
-                {
-                    Debug.LogWarning($"(BaseSettingsManager) A BaseSettingBehaviour with TargetId {behaviour.TargetId} has already been registered. Skipping...");
-                    continue;
-                }
-
-                _registeredBehaviours[behaviour.TargetId] = behaviour;
-            }
-        }
-
-        private void RegisterOptionGetters()
-        {
-            foreach (var optionGetter in _optionGetters)
-            {
-                if (_registeredOptionGetters.ContainsKey(optionGetter.TargetId))
-                {
-                    Debug.LogWarning($"(BaseSettingsManager) A BaseSettingOptionGetter with TargetId {optionGetter.TargetId} has already been registered. Skipping...");
-                    continue;
-                }
-
-                _registeredOptionGetters[optionGetter.TargetId] = optionGetter;
-            }
-        }
-
         private void RegisterSettings()
         {
             foreach (var group in _registry.Groups)
@@ -248,6 +226,8 @@ namespace BlueMuffinGames.Tools.SettingsSystem
                     }
 
                     _registeredSettingDefinitions[definition.ID] = definition;
+                    if (definition.Behaviour != null) _registeredBehaviours[definition.ID] = definition.Behaviour;
+                    if (definition.OptionProvider != null) _registeredOptionProviders[definition.ID] = definition.OptionProvider;
 
                     if (definition.TryGetDefaultValue(out var defaultValue))
                     {

@@ -14,7 +14,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
 
             if (_slider == null)
             {
-                Debug.LogError($"(IntSliderSetting) No Slider is assigned on {name}.");
+                Debug.LogError($"(IntSliderSetting) No Slider component is assigned on {name} with id {ID}.");
                 return;
             }
 
