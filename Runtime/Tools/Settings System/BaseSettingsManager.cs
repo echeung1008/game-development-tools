@@ -146,6 +146,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
             if (Instance == null)
             {
                 Instance = this;
+                DontDestroyOnLoad(gameObject);
                 RegisterSettings();
             }
             else Destroy(gameObject);
