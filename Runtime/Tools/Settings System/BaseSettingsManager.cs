@@ -149,8 +149,14 @@ namespace BlueMuffinGames.Tools.SettingsSystem
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
                 RegisterSettings();
+
+                if (_debug) PrintRegisteredValues();
             }
-            else Destroy(gameObject);
+            else
+            {
+                if (_debug) Debug.LogWarning("(BaseSettingsManager) Tried to have more than one BaseSettingsManager instance. Destroying extra...");
+                Destroy(gameObject);
+            }
         }
 
         protected virtual void OnDestroy()
@@ -250,5 +256,19 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         }
 
         protected virtual string GetSaveKey(string id) => $"Setting: {id}";
+
+        #region Debug
+        [ContextMenu("Print Registered Values")]
+        private void PrintRegisteredValues()
+        {
+            string result = "Registered Setting Values:";
+            foreach (var pair in _registeredValues)
+            {
+                result += $"\n\t{pair.Key} => {pair.Value.ToString()}";
+            }
+
+            Debug.Log(result);
+        }
+        #endregion
     }
 }
