@@ -7,15 +7,16 @@ namespace BlueMuffinGames.Tools.SettingsSystem
     {
         public static BaseSettingsManager Instance { get; private set; }
 
-        [SerializeField] private SettingsRegistry _registry;
+        [SerializeField] protected SettingsRegistry _registry;
+        [SerializeField] protected bool _debug;
 
-        private Dictionary<string, SettingGroup> _registeredSettingGroups = new();
-        private Dictionary<string, SettingDefinition> _registeredSettingDefinitions = new();
+        protected Dictionary<string, SettingGroup> _registeredSettingGroups = new();
+        protected Dictionary<string, SettingDefinition> _registeredSettingDefinitions = new();
 
-        private Dictionary<string, object> _registeredValues = new();
-        private Dictionary<string, BaseSettingBehaviour> _registeredBehaviours = new();
-        private Dictionary<string, BaseOptionProvider> _registeredOptionProviders = new();
-        private Dictionary<string, object> _changeRegistry = new();
+        protected Dictionary<string, object> _registeredValues = new();
+        protected Dictionary<string, BaseSettingBehaviour> _registeredBehaviours = new();
+        protected Dictionary<string, BaseOptionProvider> _registeredOptionProviders = new();
+        protected Dictionary<string, object> _changeRegistry = new();
 
         public virtual bool TryGetValue<T>(string id, out T value, bool onlyApplied = true)
         {
@@ -236,6 +237,7 @@ namespace BlueMuffinGames.Tools.SettingsSystem
                         if (TryGetSavedSetting(definition.ID, definition.SettingType, out object savedValue)) initialValue = savedValue;
 
                         RecordChange(definition.ID, initialValue);
+                        if (_debug) Debug.Log($"(BaseSettingsManager) Registered setting {definition.ID} with initial value {initialValue}");
                     }
                     else if (definition.SettingType != SettingDefinition.Type.None)
                     {
