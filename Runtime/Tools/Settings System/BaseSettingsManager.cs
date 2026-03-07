@@ -61,12 +61,14 @@ namespace BlueMuffinGames.Tools.SettingsSystem
         {
             foreach (var pair in _changeRegistry)
             {
-                if (!_registeredBehaviours.TryGetValue(pair.Key, out var behaviour)) continue;
-
-                behaviour.OnValueApplied(pair.Value);
-                SaveSetting(pair.Key, pair.Value);
-
                 _registeredValues[pair.Key] = pair.Value;
+
+                if (_registeredBehaviours.TryGetValue(pair.Key, out var behaviour))
+                {
+                    behaviour.OnValueApplied(pair.Value);
+                }
+                
+                SaveSetting(pair.Key, pair.Value);
                 
                 // check if it was set back to the default value
                 if (_registeredSettingDefinitions.TryGetValue(pair.Key, out var definition) && 
@@ -245,9 +247,10 @@ namespace BlueMuffinGames.Tools.SettingsSystem
                         RecordChange(definition.ID, initialValue);
                         if (_debug) Debug.Log($"(BaseSettingsManager) Registered setting {definition.ID} with initial value {initialValue}");
                     }
-                    else if (definition.SettingType != SettingDefinition.Type.None)
+                    else
                     {
-                        Debug.LogError($"(BaseSettingsManager) Failed to parse setting definition's {definition.ID} default value to the setting's type {definition.SettingType}.");
+                        if (definition.SettingType != SettingDefinition.Type.None)
+                            Debug.LogError($"(BaseSettingsManager) Failed to parse setting definition's {definition.ID} default value to the setting's type {definition.SettingType}.");
                     }
                 }
             }
