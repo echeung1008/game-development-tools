@@ -14,8 +14,8 @@ namespace BlueMuffinGames.Utility
         public event Action<Collider> TriggerExit = delegate { };
 
         public void OnCollisionEnter(Collision collision) => CollisionEnter?.Invoke(collision);
-        public void OnCollisionStay(Collision collision) => CollisionEnter?.Invoke(collision);
-        public void OnCollisionExit(Collision collision) => CollisionEnter?.Invoke(collision);
+        public void OnCollisionStay(Collision collision) => CollisionStay?.Invoke(collision);
+        public void OnCollisionExit(Collision collision) => CollisionExit?.Invoke(collision);
         public void OnTriggerEnter(Collider other) => TriggerEnter?.Invoke(other);
         public void OnTriggerStay(Collider other) => TriggerStay?.Invoke(other);
         public void OnTriggerExit(Collider other) => TriggerExit?.Invoke(other);
