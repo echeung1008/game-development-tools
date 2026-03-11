@@ -7,20 +7,21 @@ namespace BlueMuffinGames.Tools.StateMachine
 {
     public class StateMachine : MonoBehaviour
     {
+        [SerializeField] private List<State> _states = new();
         [SerializeField] private bool _allowExternalStates = false;
         [SerializeField] private int _initialStateIndex = 0;
         [SerializeField] private bool _printWarningsAndErrors = false;
 
         public State CurrentState { get; private set; }
 
-        private Dictionary<string, State> _states = new();
+        private Dictionary<string, State> _stateRegistry = new();
 
         public event Action<State> OnStateExited = delegate { };
         public event Action<State> OnStateEntered = delegate { };
 
         public virtual void ChangeState(string stateName)
         {
-            if (_states.TryGetValue(stateName, out State state))
+            if (_stateRegistry.TryGetValue(stateName, out State state))
             {
                 ChangeState(state);
             }
@@ -30,7 +31,7 @@ namespace BlueMuffinGames.Tools.StateMachine
         public virtual void ChangeState(State state)
         {
             if (state == null) return;
-            if (!_allowExternalStates && !_states.Values.Contains(state)) { LogError($"Attempted to transition to {state.name} when external states aren't allowed in StateMachine {name}."); return; }
+            if (!_allowExternalStates && !_stateRegistry.Values.Contains(state)) { LogError($"Attempted to transition to {state.name} when external states aren't allowed in StateMachine {name}."); return; }
             if (state == CurrentState) return;
 
             if (CurrentState != null)
@@ -54,21 +55,32 @@ namespace BlueMuffinGames.Tools.StateMachine
             int numStates = 0;
 
             // initialize and register states
-            foreach (Transform child in transform)
+            foreach (var state in _states)
             {
-                if (child.TryGetComponent(out State state))
-                {
-                    if (_states.ContainsKey(state.name)) { LogWarning($"State name {state.name} is conflicting with another state."); continue; }
+                if (_stateRegistry.ContainsKey(state.name)) { LogWarning($"State name {state.name} is conflicting with another state."); continue; }
 
-                    _states[state.name] = state;
-                    state.Initialize(this);
-                    numStates++;
-                }
+                _stateRegistry[state.name] = state;
+                state.Initialize(this);
+                numStates++;
             }
 
             Log($"Registered {numStates} states in StateMachine {name}");
 
-            ChangeState(_states.Values.ToList()[Mathf.Min(numStates-1, _initialStateIndex)]);
+            ChangeState(_stateRegistry.Values.ToList()[Mathf.Min(numStates-1, _initialStateIndex)]);
+        }
+
+        protected virtual void Update()
+        {
+            if (CurrentState == null) return;
+
+            CurrentState.StateUpdate();
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            if (CurrentState == null) return;
+
+            CurrentState.StateFixedUpdate();
         }
 
         #region Debugging

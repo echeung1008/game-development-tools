@@ -63,6 +63,10 @@ namespace BlueMuffinGames.Tools.StateMachine
         /// </summary>
         public virtual void Exit() { OnExited?.Invoke(); }
 
+        public virtual void StateUpdate() { }
+        
+        public virtual void StateFixedUpdate() { }
+
         private void HandleShouldTransition(State targetState)
         {
             OnShouldTransition?.Invoke(targetState);
