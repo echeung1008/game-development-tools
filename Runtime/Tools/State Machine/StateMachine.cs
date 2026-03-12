@@ -12,6 +12,7 @@ namespace BlueMuffinGames.Tools.StateMachine
         [SerializeField] private int _initialStateIndex = 0;
         [SerializeField] private bool _printWarningsAndErrors = false;
 
+        public IReadOnlyDictionary<string, State> StateRegistry => _stateRegistry;
         public State CurrentState { get; private set; }
 
         private Dictionary<string, State> _stateRegistry = new();
