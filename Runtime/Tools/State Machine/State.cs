@@ -67,6 +67,11 @@ namespace BlueMuffinGames.Tools.StateMachine
         
         public virtual void StateFixedUpdate() { }
 
+        protected void SignalTransition(State targetState)
+        {
+            OnShouldTransition?.Invoke(targetState);
+        }
+
         private void HandleShouldTransition(State targetState)
         {
             OnShouldTransition?.Invoke(targetState);
