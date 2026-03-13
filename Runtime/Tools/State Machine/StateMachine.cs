@@ -51,7 +51,7 @@ namespace BlueMuffinGames.Tools.StateMachine
             OnStateEntered?.Invoke(CurrentState);
         }
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             int numStates = 0;
 
@@ -61,13 +61,20 @@ namespace BlueMuffinGames.Tools.StateMachine
                 if (_stateRegistry.ContainsKey(state.name)) { LogWarning($"State name {state.name} is conflicting with another state."); continue; }
 
                 _stateRegistry[state.name] = state;
-                state.Initialize(this);
                 numStates++;
             }
 
             Log($"Registered {numStates} states in StateMachine {name}");
 
             ChangeState(_stateRegistry.Values.ToList()[Mathf.Min(numStates-1, _initialStateIndex)]);
+        }
+
+        protected virtual void Start()
+        {
+            foreach (var state in StateRegistry.Values)
+            {
+                state.Initialize(this);
+            }
         }
 
         protected virtual void Update()
