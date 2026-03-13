@@ -74,7 +74,8 @@ namespace BlueMuffinGames.Tools.StateMachine
                 state.Initialize(this);
             }
 
-            ChangeState(_stateRegistry.Values.ToList()[Mathf.Min(StateRegistry.Count - 1, _initialStateIndex)]);
+            if (_stateRegistry.Count > 0) ChangeState(_stateRegistry.Values.ToList()[Mathf.Min(StateRegistry.Count - 1, _initialStateIndex)]);
+            else LogWarning($"No registered states to change to.");
         }
 
         protected virtual void Update()
