@@ -65,8 +65,6 @@ namespace BlueMuffinGames.Tools.StateMachine
             }
 
             Log($"Registered {numStates} states in StateMachine {name}");
-
-            ChangeState(_stateRegistry.Values.ToList()[Mathf.Min(numStates-1, _initialStateIndex)]);
         }
 
         protected virtual void Start()
@@ -75,6 +73,8 @@ namespace BlueMuffinGames.Tools.StateMachine
             {
                 state.Initialize(this);
             }
+
+            ChangeState(_stateRegistry.Values.ToList()[Mathf.Min(StateRegistry.Count - 1, _initialStateIndex)]);
         }
 
         protected virtual void Update()
