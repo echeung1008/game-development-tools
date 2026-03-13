@@ -51,7 +51,7 @@ namespace BlueMuffinGames.Tools.StateMachine
             OnStateEntered?.Invoke(CurrentState);
         }
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             int numStates = 0;
 
