@@ -6,13 +6,14 @@ namespace BlueMuffinGames.Tools.StateMachine
 {
     public abstract class State : MonoBehaviour
     {
-        private List<StateTransition> _transitions = new();
+        public StateMachine ParentStateMachine { get; private set; }
 
         public event Action<State> OnShouldTransition = delegate { };
         public event Action OnEntered = delegate { };
         public event Action OnExited = delegate { };
 
-        public StateMachine ParentStateMachine { get; private set; }
+        public IReadOnlyList<StateTransition> Transitions => _transitions;
+        private List<StateTransition> _transitions = new();
 
         /// <summary>
         /// Called when this state is registered to the StateMachine.
